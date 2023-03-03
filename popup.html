@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="popup.css">
+</head>
+<body>
+	<details id="configDetails">
+		<summary>&#x2699;&#xFE0E;</summary>
+		<table class="config">
+			<tr>
+				<td>Words per minute</td>
+				<td><input id="wordsPerMin" type="number" step="5" min="0"/></td>
+			</tr>
+			<tr title="Hide similar, but less useful, fullpage info">
+				<td>Prefer articles</td>
+				<td><input id="preferArticle" type="checkbox"/></td>
+			</tr>
+		</table>
+	</details>
+
+	<table id="article" class="hidden">
+		<caption>Article</caption>
+		<tr title="How many minutes it will take to read this article.">
+			<td>Reading Time</td>
+			<td id="articleTime"></td>
+		</tr>
+		<tr>
+			<td>Words</td>
+			<td id="articleWords"></td>
+		</tr>
+		<tr>
+			<td>Characters</td>
+			<td id="articleChars"></td>
+		</tr>
+		<tr title="Excludes characters used as whitespace e.g. spaces, newlines, etc.">
+			<td>Non Whitespace</td>
+			<td id="articleNonWSChars"></td>
+		</tr>
+	</table>
+	<table id="fullPage">
+		<caption>Webpage</caption>
+		<tr title="How many minutes it will take to read this webpage.">
+			<td>Reading Time</td>
+			<td id="time"></td>
+		</tr>
+		<tr>
+			<td>Words</td>
+			<td id="words"></td>
+		</tr>
+		<tr>
+			<td>Characters</td>
+			<td id="chars"></td>
+		</tr>
+		<tr title="Excludes characters used as whitespace e.g. spaces, newlines, etc.">
+			<td>Non Whitespace</td>
+			<td id="nonWSChars"></td>
+		</tr>
+		<tr>
+			<td>Pages</td>
+			<td id="pages"></td>
+		</tr>
+		<tr>
+			<td>Progress</td>
+			<td id="progress"></td>
+		</tr>
+	</table>
+	<table id="selection" class="hidden">
+		<caption>Selection</caption>
+		<tr>
+			<td>Words</td>
+			<td id="selectWords"></td>
+		</tr>
+		<tr>
+			<td>Characters</td>
+			<td id="selectChars"></td>
+		</tr>
+		<tr title="Excludes characters used as whitespace e.g. spaces, newlines, etc.">
+			<td>Non Whitespace</td>
+			<td id="selectNonWSChars"></td>
+		</tr>
+	</table>
+	<script type="text/javascript" src="popup.js"></script>
+</body>
+</html>

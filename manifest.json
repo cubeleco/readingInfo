@@ -1,0 +1,30 @@
+{
+"manifest_version": 2,
+"version": "1.0",
+"name": "Reading Info",
+"description": "Show reading time, word, and character counts in a toolbar popup.",
+
+"browser_specific_settings": {
+	"gecko": {
+		"id": "readingInfo@cubeleco"
+	}
+},
+"browser_action": {
+	"browser_style": true,
+	"default_popup": "popup.html",
+	"default_icon": {
+		"256": "icon.svg"
+	}
+},
+
+"icons": {
+	"256": "icon.svg"
+},
+"commands": {
+	"_execute_browser_action": {
+		"description": "Open toolbar popup"
+	}
+},
+
+"permissions": ["activeTab", "storage"]
+}
