@@ -21,17 +21,22 @@ const wordRex = /\w+\b/g;
 //const sentenceRex = /\S\.{1}(\s|[\'\"\)\}\]]|$)+/g;
 const whitespaceRex = /\s/g;
 
-//get view height for counting number of scrolling pages
+//document height in pixels
+const docHeight = document.documentElement.getBoundingClientRect().height;
+//view height for counting number of scrolling pages
 const viewHeight = document.documentElement.clientHeight;
 const article = document.querySelector('article');
+
 //create return object
 let info = {};
 
 //webpage info
 info.webpage = commonInfo(document.body.innerText);
-info.pages = Math.round(document.body.scrollHeight / viewHeight);
-//percentage scrolled down the page minus 1 screen
-info.progress = Math.round((window.scrollY * 100) / (document.body.scrollHeight - viewHeight));
+
+//current page / total number of pages
+info.pages = (Math.ceil(window.scrollY / viewHeight) + 1) + '/' + Math.ceil(docHeight / viewHeight);
+//percentage scrolled down the page. minus 1 screen because scrollY is top of screen
+info.progress = Math.round((window.scrollY * 100) / (docHeight - viewHeight));
 
 //article info
 if(article !== null && article.innerText.length > 800) {

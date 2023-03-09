@@ -5,14 +5,14 @@
 	<link rel="stylesheet" type="text/css" href="popup.css">
 </head>
 <body>
-	<details id="configDetails">
-		<summary>&#x2699;&#xFE0E;</summary>
-		<table class="config">
+	<details>
+		<summary id="configGear">&#x2699;&#xFE0E;</summary>
+		<table id="config">
 			<tr>
 				<td>Words per minute</td>
-				<td><input id="wordsPerMin" type="number" step="5" min="0"/></td>
+				<td><input id="wordsPerMin" type="number" step="5" min="1"/></td>
 			</tr>
-			<tr title="Hide similar, but less useful, fullpage info">
+			<tr title="Hide fullpage reading info when an article element is found.">
 				<td>Prefer articles</td>
 				<td><input id="preferArticle" type="checkbox"/></td>
 			</tr>
@@ -21,7 +21,7 @@
 
 	<table id="article" class="hidden">
 		<caption>Article</caption>
-		<tr title="How many minutes it will take to read this article.">
+		<tr class="highlight" title="How long it will take to read this article.">
 			<td>Reading Time</td>
 			<td id="articleTime"></td>
 		</tr>
@@ -38,9 +38,10 @@
 			<td id="articleNonWSChars"></td>
 		</tr>
 	</table>
+
 	<table id="fullPage">
 		<caption>Webpage</caption>
-		<tr title="How many minutes it will take to read this webpage.">
+		<tr class="highlight" title="How long it will take to read this webpage.">
 			<td>Reading Time</td>
 			<td id="time"></td>
 		</tr>
@@ -65,6 +66,7 @@
 			<td id="progress"></td>
 		</tr>
 	</table>
+
 	<table id="selection" class="hidden">
 		<caption>Selection</caption>
 		<tr>
@@ -80,6 +82,7 @@
 			<td id="selectNonWSChars"></td>
 		</tr>
 	</table>
+
 	<script type="text/javascript" src="popup.js"></script>
 </body>
 </html>

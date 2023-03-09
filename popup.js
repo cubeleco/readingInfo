@@ -13,12 +13,23 @@ function saveChecked(event) {
 	chrome.storage.local.set({ [event.target.id]: event.target.checked });
 }
 
+function roundTime(min) {
+	if(min < 1.0)
+		return '<1m';
+
+	const remainMin = Math.round(min % 60);
+	const hour = Math.floor(min / 60);
+
+	//concatenate hours and minutes string
+	return (hour > 0? hour + 'h' : '') + remainMin + 'm';
+}
+
 //set time based on words per minute input field
 function updateTimes(event) {
-	document.getElementById('time').textContent = Math.round(info.webpage.words / event.target.value) + 'm';
+	document.getElementById('time').textContent = roundTime(info.webpage.words / event.target.value);
 
 	if(info.article)
-		document.getElementById('articleTime').textContent = Math.round(info.article.words / event.target.value) + 'm';
+		document.getElementById('articleTime').textContent = roundTime(info.article.words / event.target.value);
 }
 function hideTr(ids) {
 	for(let i of ids) {
@@ -26,19 +37,25 @@ function hideTr(ids) {
 	}
 }
 
+function protectedTab() {
+	document.body.textContent = 'Protected Page';
+}
+
 function setInfo(obj) {
-	info = obj[0];
 	//show error on protected page
-	if(!info) {
-		document.body.textContent = 'Protected Page';
+	if(!obj[0]) {
+		protectedTab();
 		return;
 	}
+	//collect info results
+	info = obj[0].result;
+
 	updateTimes({ target: document.getElementById('wordsPerMin') });
 
 	document.getElementById('words').textContent = info.webpage.words.toLocaleString();
 	document.getElementById('chars').textContent = info.webpage.chars.toLocaleString();
 	document.getElementById('nonWSChars').textContent = info.webpage.nonWSChars.toLocaleString();
-	document.getElementById('pages').textContent = Math.round(info.progress / 100 * (info.pages - 1)) + 1 + '/' + info.pages;
+	document.getElementById('pages').textContent = info.pages;
 	document.getElementById('progress').textContent = info.progress + '%';
 
 	if(info.article) {
@@ -61,14 +78,21 @@ function setInfo(obj) {
 	}
 }
 
+function startInfo(tabs) {
+	//start content script in active tab
+	chrome.scripting.executeScript({
+		files: ["info.js"],
+		target: {tabId: tabs[0].id}
+	}).then(setInfo, protectedTab);
+}
+
 function readPrefs(storage) {
 	//reload preferences
 	prefs = storage;
 	document.getElementById('wordsPerMin').value = prefs.wordsPerMin;
 	document.getElementById('preferArticle').checked = prefs.preferArticle;
 
-	//start content script in active tab
-	browser.tabs.executeScript({ file: "/info.js" }).then(setInfo, console.error);
+	chrome.tabs.query({ active: true, currentWindow: true }).then(startInfo);
 }
 function start() {
 	chrome.storage.local.get(prefs, readPrefs);
